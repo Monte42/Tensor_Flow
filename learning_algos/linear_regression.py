@@ -4,7 +4,6 @@ from __future__ import absolute_import,division,print_function,unicode_literals
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from IPython.display import clear_output
 from six.moves import urllib
 import tensorflow.compat.v2.feature_column as fc
 import tensorflow as tf
@@ -69,7 +68,6 @@ linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
 linear_est.train(train_input_fn)
 results = linear_est.evaluate(eval_input_fn)
 
-clear_output()
 print(results['accuracy'])
 
 result = list(linear_est.predict(eval_input_fn))
