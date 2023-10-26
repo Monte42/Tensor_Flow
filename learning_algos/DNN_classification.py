@@ -18,7 +18,7 @@ test_y = test.pop('Species')
 # print(train.head())
 # print(train.shape)
 
-def input_func(features, labels, training=True, batch_size=256):
+def input_fn(features, labels, training=True, batch_size=256):
     dataset = tf.data.Dataset.from_tensor_slices((dict(features), labels))
     if training:
         dataset = dataset.shuffle(1000).repeat()
@@ -27,4 +27,15 @@ def input_func(features, labels, training=True, batch_size=256):
 feature_columns = []
 for k in train.keys():
     feature_columns.append(tf.feature_column.numeric_column(key=k))
-print(feature_columns)
+# print(feature_columns)
+
+classifier = tf.estimator.DNNClassifier(
+        feature_columns=feature_columns,
+        hidden_units=[30,10],
+        n_classes=3
+    )
+
+classifier.train( # Crashes here
+        input_fn = lambda: input_fn(train,train_y, training=True),
+        steps=5000
+    )
