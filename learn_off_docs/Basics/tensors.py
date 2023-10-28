@@ -8,6 +8,10 @@ import numpy as np
 # TensorFlow operates on multidimensional arrays or tensors 
 # represented as tf.Tensor objects
 
+# All tensors are immutable like Python numbers and strings: 
+# you can never update the contents of a tensor, only create 
+# a new one.
+
 # These Dimensions are reffered to be "rank" or shape
 
 # RANK: 0    SHAPE[]: Scalar   AXES: 0
