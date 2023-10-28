@@ -4,8 +4,6 @@ import tensorflow as tf
 # BASICS
 # =======
 
-# tf.debugging.set_log_device_placement(True) # Uncomment to se variables loaction
-
 # A tf variable is the recommended way to represent 
 # shared, persistent state your program manipulates
 
