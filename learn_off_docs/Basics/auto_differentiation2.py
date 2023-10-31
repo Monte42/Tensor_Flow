@@ -45,3 +45,31 @@ plt.plot(x, dy_dx, label='dy/dx')
 plt.legend()
 plt.show()
 _ = plt.xlabel('x')
+
+
+
+# =============
+# Control Flow
+# =============
+# Because a gradient tape records operations as they are executed, 
+# Python control flow is naturally handled (for example, if and while statements)
+
+# Un-comment line 56 and comment out 57 to see the difference
+x = tf.constant(1.0) 
+# x = tf.constant(-1.0)
+v0 = tf.Variable(2.0)
+v1 = tf.Variable(2.5)
+
+with tf.GradientTape(persistent=True) as tape:
+    tape.watch(x)
+    result = v0 if x > 0.0 else v1**2
+
+dv0, dv1 = tape.gradient(result, [v0,v1])
+print(dv0)
+print(dv1)
+
+# control statements themselves are not differentiable, so they are invisible to gradient-based optimizers
+# Depending on the value of x in the above example, the tape either records result = v0 or result = v1**2. 
+# The gradient with respect to x is always None
+dx = tape.gradient(result,x)
+print(dx)
