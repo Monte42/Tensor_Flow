@@ -5,7 +5,7 @@ import tensorflow as tf
 # This topic was getting rather large, so I broke it into two sections
 
 # ================================
-# Gradients of non-scalar targets
+# Gradients of non-scalar targets   -   https://www.tensorflow.org/guide/autodiff#gradients_of_non-scalar_targets
 # ================================
 # A gradient is fundamentally an operation on a scalar.
 x = tf.Variable(2.0)
@@ -49,7 +49,7 @@ _ = plt.xlabel('x')
 
 
 # =============
-# Control Flow
+# Control Flow   -   https://www.tensorflow.org/guide/autodiff#control_flow
 # =============
 # Because a gradient tape records operations as they are executed, 
 # Python control flow is naturally handled (for example, if and while statements)
@@ -74,9 +74,10 @@ print(dv1)
 dx = tape.gradient(result,x)
 print(dx)
 
-print('\nWorking\n')
+
+
 # ====================================
-# Cases Where A Gradient Returns None
+# Cases Where A Gradient Returns None   -   https://www.tensorflow.org/guide/autodiff#cases_where_gradient_returns_none
 # ====================================
 # Here are 5 examples of what may cause a gradient to return None
 
@@ -137,3 +138,18 @@ with tf.GradientTape() as tape:
     y = x1**2
 
 print(tape.gradient(y,x0))
+
+
+
+# ======================
+# Zeros instead of None   -   https://www.tensorflow.org/guide/autodiff#zeros_instead_of_none
+# ======================
+# In some cases it would be convenient to get 0 instead of None for unconnected gradients. You can 
+# decide what to return when you have unconnected gradients using the unconnected_gradients argument
+x = tf.Variable([2., 2.])
+y = tf.Variable(3.)
+
+with tf.GradientTape() as tape:
+    z = y**2
+# Returns a Tensor the same shape as x, with 0's for values.
+print(tape.gradient(z, x, unconnected_gradients=tf.UnconnectedGradients.ZERO))
